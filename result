@@ -1,0 +1,33 @@
+=================================================================
+        AI-POWERED WORKPLACE SAFETY MONITORING
+              FINAL SUMMARY REPORT
+=================================================================
+
+ Dataset
+   Total Samples  : 600
+   Features Used  : 7
+   Train / Test   : 480 / 120 (80/20 split)
+
+ Model Performance
+   Model                       Accuracy  Precision   Recall       F1
+   ---------------------------------------------------------------
+   Logistic Regression          100.00%    100.00%  100.00%  100.00%
+   Random Forest                100.00%    100.00%  100.00%  100.00%
+
+ Best Model   : Random Forest
+   Final Model   : rf_model (Scikit-learn RandomForestClassifier)
+
+ Simulation Results (15 frames)
+   problem Unsafe      : 8 frames (53.3%)
+   pass Safe        : 4 frames (26.7%)
+   cant pass High Risk   : 3 frames (20.0%)
+
+ Output Files
+   right safety_events.csv
+   right model_comparison.png
+   right feature_importance.png
+   right risk_distribution.png
+   right safety_dashboard.png
+
+=================================================================
+=================================================================
