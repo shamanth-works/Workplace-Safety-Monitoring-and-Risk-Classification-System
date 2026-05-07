@@ -9,12 +9,79 @@ High Risk     96
 Name: count, dtype: int64
 
  Sample Data:
-helmet_present	mask_present	helmet_score	mask_score	violations_count	people_count	compliance_score	risk_label
-0	                 1	             1	           0.77	      0.74	           0	1	          0.76	            Safe
-1	                 1	             0	           0.71      	0.04             1	5	          0.38	            Unsafe
-2	                 1	             1	           0.91	      0.91	           1	5	          0.91	            Unsafe
-3                  0	             1	           0.32	      0.70	           1	2	          0.51	            Unsafe
-4	                 1	             1	           0.75	      0.99	           0	4	          0.87	            Safe
-5 	               1	             0	           0.73	      0.34	           1	1	          0.54	            Unsafe
-6                  0	             1	           0.39	      0.81	           1	1	          0.60	            Unsafe
-7	                 1	             1	           0.91      	0.71	           0	5	          0.81	            Safe
+helmet_present	 mask_present	 helmet_score	 mask_score 	violations_count	 people_count	compliance_score	risk_label
+0	                  1	             1	           0.77	      0.74	            0	1	          0.76	            Safe
+1	                  1	             0	           0.71      	0.04             1	5	          0.38	            Unsafe
+2	                  1	             1	           0.91	      0.91	            1	5	          0.91	            Unsafe
+3                   0	             1	           0.32	      0.70	            1	2	          0.51	            Unsafe
+4	                  1	             1	           0.75	      0.99	            0	4	          0.87	            Safe
+5 	                 1	             0	           0.73	      0.34	            1	1	          0.54	            Unsafe
+6                   0	             1	           0.39	      0.81	            1	1	          0.60	            Unsafe
+7	                  1	             1	           0.91      	0.71	            0	5	          0.81	            Safe
+
+
+
+
+
+the sample of the code used is:-
+
+def generate_dataset(n_samples=600):
+    """
+    Generates structured PPE compliance dataset.
+    Features:
+        helmet_present    : 0 or 1
+        mask_present      : 0 or 1
+        helmet_score      : float 0.0 - 1.0
+        mask_score        : float 0.0 - 1.0
+        violations_count  : 0, 1, 2, or 3
+        people_count      : 1 to 5
+        compliance_score  : float 0.0 - 1.0
+    Risk Labels:
+        Safe      -> both helmet and mask present, no violations
+        Unsafe    -> one PPE missing
+        High Risk -> both PPE missing or 2+ violations
+    """
+    records = []
+
+    for _ in range(n_samples):
+        people_count = random.randint(1, 5)
+        helmet_present = random.choice([1, 1, 1, 0])   
+        mask_present   = random.choice([1, 1, 1, 0])   
+
+        helmet_score = round(random.uniform(0.7, 1.0) if helmet_present else random.uniform(0.0, 0.4), 2)
+        mask_score   = round(random.uniform(0.7, 1.0) if mask_present   else random.uniform(0.0, 0.4), 2)
+
+        violations_count = (1 - helmet_present) + (1 - mask_present)
+        violations_count = min(violations_count + random.choice([0, 0, 0, 1]), 3)
+
+        compliance_score = round((helmet_score + mask_score) / 2, 2)
+
+        # Label assignment
+        if helmet_present == 1 and mask_present == 1 and violations_count == 0:
+            risk_label = "Safe"
+        elif violations_count >= 2 or (helmet_present == 0 and mask_present == 0):
+            risk_label = "High Risk"
+        else:
+            risk_label = "Unsafe"
+
+        records.append({
+            "helmet_present": helmet_present,
+            "mask_present": mask_present,
+            "helmet_score": helmet_score,
+            "mask_score": mask_score,
+            "violations_count": violations_count,
+            "people_count": people_count,
+            "compliance_score": compliance_score,
+            "risk_label": risk_label
+        })
+
+    df = pd.DataFrame(records)
+    return df
+
+
+df = generate_dataset(600)
+print(f" Dataset generated: {df.shape[0]} samples, {df.shape[1]} columns")
+print("\n Risk Label Distribution:")
+print(df['risk_label'].value_counts())
+print("\n Sample Data:")
+df.head(8)
