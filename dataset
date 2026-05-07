@@ -1,0 +1,20 @@
+# here the data set is virtually created 
+Dataset generated: 600 samples, 8 columns
+
+ Risk Label Distribution:
+risk_label
+Unsafe       257
+Safe         247
+High Risk     96
+Name: count, dtype: int64
+
+ Sample Data:
+helmet_present	mask_present	helmet_score	mask_score	violations_count	people_count	compliance_score	risk_label
+0	                 1	             1	           0.77	      0.74	           0	1	          0.76	            Safe
+1	                 1	             0	           0.71      	0.04             1	5	          0.38	            Unsafe
+2	                 1	             1	           0.91	      0.91	           1	5	          0.91	            Unsafe
+3                  0	             1	           0.32	      0.70	           1	2	          0.51	            Unsafe
+4	                 1	             1	           0.75	      0.99	           0	4	          0.87	            Safe
+5 	               1	             0	           0.73	      0.34	           1	1	          0.54	            Unsafe
+6                  0	             1	           0.39	      0.81	           1	1	          0.60	            Unsafe
+7	                 1	             1	           0.91      	0.71	           0	5	          0.81	            Safe
